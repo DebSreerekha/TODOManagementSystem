@@ -1,8 +1,0 @@
-this is a test file ^D
-
-
-:q
-^D
-
-:wq
-:wq
