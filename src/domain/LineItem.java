@@ -1,14 +1,23 @@
 package domain;
 
+
 import java.util.Date;
 
 public class LineItem {
 	
 	private String itemName;
 	private String itemDescription;
-	private String status;
+	private int status;
 	private Date timeStamp;
 	       
+	public LineItem(String key, String value) {
+		// TODO Auto-generated constructor stub
+		this.itemName = key;
+		this.itemDescription = value;
+		this.status = Constants.STATUS_ADDED ;
+		this.timeStamp = new Date();
+				
+	}
 	public String getItemName() {
 		return itemName;
 	}
@@ -21,10 +30,10 @@ public class LineItem {
 	public void setItemDescription(String itemDescription) {
 		this.itemDescription = itemDescription;
 	}
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public Date getTimeStamp() {
