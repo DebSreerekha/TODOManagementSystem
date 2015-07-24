@@ -41,9 +41,10 @@ public class ToDoListTest {
 		String Value1 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
 		String Value2 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
 		assertEquals(Value1,"Value1");
-		assertEquals(Value2,"Value2");
+		assertEquals(Value2,"Value1");
 		
 	}
+	
 	@Test
 	public void checkListItemDeletion()
 	{
@@ -65,6 +66,8 @@ public class ToDoListTest {
 		//String Value2 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
 	
 	}
+	
+	/*
 	@Test
 	public void checkListItemUpdation()
 	{
@@ -75,7 +78,7 @@ public class ToDoListTest {
 	{
 		
 	}
-	
+	*/
 	
 
 }
