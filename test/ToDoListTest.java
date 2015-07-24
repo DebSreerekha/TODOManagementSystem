@@ -25,7 +25,7 @@ public class ToDoListTest {
 		
 		// test if the item is added
 		int size = tdl.getItems().size();
-		assertEquals(size,2);
+		assertEquals(2,size);
 		
 	}
 	@Test
@@ -39,19 +39,15 @@ public class ToDoListTest {
 		tdl.addLineItem("Key2", "Value2");
 		
 		String Value1 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
-		String Value2 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
-		assertEquals(Value1,"Value1");
-		assertEquals(Value2,"Value1");
+		String Value2 = (String)((LineItem)tdl.getLineItem("Key2")).getItemDescription();
+		assertEquals("Value1",Value1);
+		assertEquals("Value2",Value2);
 		
 	}
 	
 	@Test
 	public void checkListItemDeletion()
 	{
-		//create a list
-		//add items to the list
-		// delete an item 
-		// check if the item still exists in the list
 		
 		//create a list
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
@@ -62,23 +58,32 @@ public class ToDoListTest {
 		
 		//delete an item from the list
 		tdl.deletItem("Key1");
-		//String Value1 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
-		//String Value2 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
+		
+		LineItem Value1 = ((LineItem)tdl.getLineItem("Key1"));
+		assertEquals(null,Value1) ;
+		
+		//check if the items exist in the list	
 	
 	}
 	
-	/*
 	@Test
 	public void checkListItemUpdation()
 	{
+		//create a list
+		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
-	}
-	@Test
-	public void checkListCreation()
-	{
+		//add items to the list 
+		tdl.addLineItem("Key1", "Value1");
+		tdl.addLineItem("Key2", "Value2");
 		
+		//delete an item from the list
+		tdl.updateLineItem("Key1","Value11");
+		
+		String Value11 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
+		
+		assertEquals("Value11",Value11) ;
+		
+		//check if the items exist in the list
 	}
-	*/
 	
-
 }

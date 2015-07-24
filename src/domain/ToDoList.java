@@ -1,5 +1,7 @@
 package domain;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
 /**
@@ -15,6 +17,7 @@ public class ToDoList {
 	
 	public ToDoList(String listName2) {
 		// TODO Auto-generated constructor stub
+		items = new Hashtable <String,LineItem>();
 	}
 	/**
 	 * Fetch the line item with the specified key
@@ -95,5 +98,5 @@ public class ToDoList {
 		items.remove(key);
 		
 	}
-
+	
 }
