@@ -16,7 +16,7 @@ public class ToDoList {
 	private Hashtable<String,LineItem> items;
 	
 	public ToDoList(String listName2) {
-		// TODO Auto-generated constructor stub
+		
 		items = new Hashtable <String,LineItem>();
 	}
 	/**
@@ -109,17 +109,16 @@ public class ToDoList {
 	 * @param string
 	 */
 	public void deletItem(String key) {
-		// TODO Auto-generated method stub
-		items.remove(key);
 		
+		items.remove(key);
 	}
 	
 	/**
 	 * Displays the items in the list on the console
 	 * 
 	 */
-	public void viewItemsInTheList() {
-		// TODO Auto-generated method stub
+	public void viewItemsInTheList(String listname) {
+		
 		Enumeration<LineItem> enumeration = items.elements();
 		
 		System.out.println("TODOList name :" + this.getListName()) ;

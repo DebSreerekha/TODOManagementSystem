@@ -11,7 +11,7 @@ public class LineItem {
 	private Date timeStamp;
 	       
 	public LineItem(String key, String value) {
-		// TODO Auto-generated constructor stub
+		
 		this.itemName = key;
 		this.itemDescription = value;
 		this.status = Constants.STATUS_ADDED ;

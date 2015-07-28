@@ -1,11 +1,18 @@
+package controller;
 import java.util.Hashtable;
 import java.util.Scanner;
 
 import domain.LineItem;
 import domain.ToDoList;
 
-
-public class TDListManager {
+/**
+ * This class is the controller class in the application 
+ * with commands to add update delete and view the items in the 
+ * todolists created .
+ * @author sreerekhadeb
+ * 
+ */
+public class TDListManager implements IListOperations {
 	/**
 	 * Instance variable to hold the list of the todo lists
 	 */
@@ -67,47 +74,41 @@ public class TDListManager {
 	public void viewList(String listname)
 	{
 		ToDoList list = ToDoLists.get(listname);
-		list.viewItemsInTheList();
+		list.viewItemsInTheList(listname);
 	}
+	
 	/**
-	 * displays the command line menu
+	 * returns the list with the specified list name
+	 * @param listName
+	 * @return
 	 */
-	public static void displayMenu ()
-	{
-		System.out.println("*********************************************************");
-		System.out.println("Welcome to the TODO Management System");
-		System.out.println("*********************************************************");
-		
-		System.out.println("1 <Listname>				      		- CREATE LIST") ;
-		System.out.println("2 <ListName,itemname,description>	 	- ADD ITEM TO LIST") ;
-		System.out.println("3 <ListName,itemname>				  	- DELETE ITEM FROM LIST") ;
-		System.out.println("4 <ListName,itemname,updateddescription>- UPDATE AN ITEM IN THE LIST") ;
-		System.out.println("5 <ListName,itemname> 					- FETCH AN ITEM FROM THE LIST") ;
-		System.out.println("6 <ListName>					  		- DISPLAY ALL THE ITEMS IN THE LIST") ;
-		
-		System.out.println(" *************************************************************************") ;
-		System.out.println(" *************************************************************************") ;
-		
-	}
-	/**
-	 * Main function to drive the ToDoListManager 
-	 * @param args
-	 */
-	public static void main(String args[])
-	{
-		TDListManager manager = new TDListManager() ;
-		
-		displayMenu();
-		
-		
-		Scanner scanner = new Scanner (System.in);
-		
-		String inputdata = scanner.nextLine();
-		 
-	}
 	public ToDoList getList(String listName) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return ToDoLists.get(listName);
+		
+	}
+	
+	/**
+	 * create the lineitem with the specified itemname and description and add it to the list with the given listname
+	 * @param listname
+	 * @param itemname
+	 * @param description
+	 */
+	public void addItemToList(String listname, String itemname, String description) {
+		ToDoList list = ToDoLists.get(listname);
+		list.addLineItem(new LineItem(itemname,description));
+	}
+	
+	/**
+	 * Displays the list item in the specified list with the given listname.
+	 * @param listname
+	 * @param itemname
+	 */
+	public void viewListItem(String listname, String itemname) {
+		
+		ToDoList list = ToDoLists.get(listname);
+		System.out.println(itemname + ":"+list.getLineItem(itemname).getItemDescription());
+		
 		
 	}
 	
