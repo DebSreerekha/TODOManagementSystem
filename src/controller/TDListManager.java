@@ -12,7 +12,7 @@ import domain.ToDoList;
  * @author sreerekhadeb
  * 
  */
-public class TDListManager implements IListOperations {
+public class TDListManager  {
 	/**
 	 * Instance variable to hold the list of the todo lists
 	 */
@@ -38,35 +38,26 @@ public class TDListManager implements IListOperations {
 		ToDoLists.put(listName, todoList);
 		return todoList;
 	}
-	/**
-	 * Adds the LineItem to the list with the specified listname 
-	 * @param list
-	 * @param item
-	 */
-	public void addItemToList(String  listname,LineItem item)
-	{
-		ToDoList list = ToDoLists.get(listname);
-		list.addLineItem(item);
-	}
+	
 	/**
 	 * Updates the item in the list with the specified list name
 	 * @param list
-	 * @param item
+	 * @param itemname
 	 */
-	public void updateItemInTheList(String listname, LineItem item)
+	public void updateItemInTheList(String listname, String itemname,String itemDescription)
 	{
 		ToDoList list = ToDoLists.get(listname);
-		list.updateLineItem(item);
+		list.updateLineItem(itemname,itemDescription);
 	}
 	/**
 	 * Deletes the item with the specified key from the specified list
 	 * @param list
 	 * @param key
 	 */
-	public void deleteItemFromTheList(String listname , String key)
+	public void deleteItemFromTheList(String listname , String itemName)
 	{
 		ToDoList list = ToDoLists.get(listname);
-		list.deletItem(key);
+		list.deletItem(itemName);
 	}
 	/**
 	 * Displays the contents of the list
@@ -108,8 +99,16 @@ public class TDListManager implements IListOperations {
 		
 		ToDoList list = ToDoLists.get(listname);
 		System.out.println(itemname + ":"+list.getLineItem(itemname).getItemDescription());
-		
-		
 	}
-	
+	/**
+	 * Updates the status of the item in the specified list.
+	 * 
+	 * @param listName
+	 * @param itemName
+	 * @param status
+	 */
+	public void updateStatus(String listName,String itemName,int status) {
+		ToDoList list = ToDoLists.get(listName);
+		list.getLineItem(itemName).setStatus(status);
+	}
 }

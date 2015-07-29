@@ -1,24 +1,36 @@
 package domain;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Enumeration;
 import java.util.Hashtable;
 /**
+ * This class encapsulates the ToDOList Object .
  * 
  * @author sreerekha
  *
  */
 public class ToDoList {
 	
+	/**
+	 * list name
+	 */
 	private String listName;
 	
+	/**
+	 * items  stored in the current list
+	 */
 	private Hashtable<String,LineItem> items;
 	
+	/**
+	 * public constructor 
+	 * 
+	 * @param listName2
+	 */
 	public ToDoList(String listName2) {
 		
 		items = new Hashtable <String,LineItem>();
+		this.listName = listName2 ;
 	}
+	
 	/**
 	 * Fetch the line item with the specified key
 	 * @param key
@@ -43,16 +55,17 @@ public class ToDoList {
 	/**
 	 * update the line item with the specified key
 	 */
-	public void updateLineItem(String key, String Value)
+	public void updateLineItem(String itemName, String description)
 	{
-		LineItem item = getLineItem(key);
-		item.setItemDescription(Value);
+		LineItem item = getLineItem(itemName);
+		item.setItemDescription(description);
 	}
 	/**
 	 * update the line item with the specified value
 	 * @param item
 	 */
-	public void updateLineItem(LineItem item)
+
+	public  void updateLineItem(LineItem item)
 	{
 		items.put(item.getItemName(),item);
 		
@@ -62,6 +75,7 @@ public class ToDoList {
 	 * 
 	 * @param item
 	 */
+	
 	public void addLineItem(LineItem item)
 	{
 		this.items.put(item.getItemName(),item);
@@ -72,9 +86,9 @@ public class ToDoList {
 	 * @param key
 	 * @param value
 	 */
-	public void addLineItem(String key,String value)
+	public void addLineItem(String itemName,String description)
 	{
-		items.put(key,new LineItem(key,value));
+		items.put(itemName,new LineItem(itemName,description));
 	}
 	/**
 	 * Get the list name
@@ -108,9 +122,9 @@ public class ToDoList {
 	 * Delete an item from the list
 	 * @param string
 	 */
-	public void deletItem(String key) {
+	public void deletItem(String itemName) {
 		
-		items.remove(key);
+		items.remove(itemName);
 	}
 	
 	/**

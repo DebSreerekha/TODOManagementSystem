@@ -1,8 +1,9 @@
 package domain;
-
-
 import java.util.Date;
-
+/**
+ * @author sreerekhadeb
+ *
+ */
 public class LineItem {
 	
 	private String itemName;
