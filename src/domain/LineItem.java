@@ -8,7 +8,7 @@ public class LineItem {
 	
 	private String itemName;
 	private String itemDescription;
-	private int status;
+	private String status;
 	private Date timeStamp;
 	       
 	public LineItem(String key, String value) {
@@ -31,10 +31,10 @@ public class LineItem {
 	public void setItemDescription(String itemDescription) {
 		this.itemDescription = itemDescription;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public Date getTimeStamp() {

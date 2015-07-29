@@ -1,13 +1,18 @@
 package view;
 
 import domain.Constants;
-
+/**
+ * This class encapsulates the user input object.
+ * 
+ * @author sreerekhadeb
+ *
+ */
 public class UserInput {
 	private int choice ;
 	private String listname;
 	private String itemname;
 	private String itemDescription;
-	private int itemStatus ;
+	private String itemStatus ;
 	
 	
 	public UserInput(String choice, String listname, String itemname ,String itemDescription) {
@@ -42,11 +47,11 @@ public class UserInput {
 	public void setItemDescription(String itemDescription) {
 		this.itemDescription = itemDescription;
 	}
-	public int  getItemStatus() {
+	public String  getItemStatus() {
 		// TODO Auto-generated method stub
 		return itemStatus;
 	}
-	public void setItemStatus(int status) {
+	public void setItemStatus(String status) {
 		this.itemStatus = status ;
 	}
 }

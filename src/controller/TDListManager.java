@@ -107,7 +107,7 @@ public class TDListManager  {
 	 * @param itemName
 	 * @param status
 	 */
-	public void updateStatus(String listName,String itemName,int status) {
+	public void updateStatus(String listName,String itemName,String status) {
 		ToDoList list = ToDoLists.get(listName);
 		list.getLineItem(itemName).setStatus(status);
 	}

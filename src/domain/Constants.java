@@ -6,9 +6,9 @@ public class Constants {
 	public static final String GROCERY = "Grocery";
 	public static final String WEDDING = "Wedding";
 	
-	public static final int STATUS_ADDED = 1;
-	public static final int STATUS_UPDATE = 2;
-	public static final int STATUS_CREATED = 3;
-	public static final int STATUS_DELETE = 4; 
+	public static final String STATUS_ADDED = "A";
+	public static final String STATUS_UPDATE = "U";
+	public static final String STATUS_CREATED = "C";
+	public static final String STATUS_DELETE = "D"; 
 
 }

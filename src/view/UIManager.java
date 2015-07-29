@@ -23,10 +23,10 @@ public class UIManager  {
 	/**
 	 * Validator Object to perform validations
 	 */
-	UserInputValidator inputValidator ;
+	private UserInputValidator inputValidator ;
 	
 	/**
-	 * No atgs constructor
+	 * No arguments constructor
 	 */
 	public UIManager()
 	{
@@ -100,7 +100,6 @@ public class UIManager  {
 	 	 */
 	 	public void processInput(UserInput  inputObject) {
 	 		
-	 		
 	 		switch(inputObject.getChoice())
 	 		{
 	 			case 1:
@@ -130,17 +129,17 @@ public class UIManager  {
 	 			case 7:
 	 				System.out.println("Update the status of the item in the list "+inputObject.getItemStatus());
 	 				tdlmanager.updateStatus(inputObject.getListname(), inputObject.getItemname(), inputObject.getItemStatus());
-	 				
+	 				break;
 	 		}
 	 		
 	 	}
 
 	/**
-	 * main fuction to test run 
+	 * main function to test run 
 	 * @param args
 	 */
 	public static void main(String []args)
 	{
-		UIManager ui = new UIManager();
+		new UIManager();
 	}
 }

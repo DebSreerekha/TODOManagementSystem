@@ -9,8 +9,15 @@ import java.util.regex.Pattern;
  *
  */
 public class UserInputValidator {
+	/**
+	 * regular expression string to validate the user input
+	 */
 	private String regex;
+	/**
+	 * Pattern object to perform regex matching.
+	 */
 	private Pattern pattern ;
+	
 	/**
 	 * No args Constructor
 	 */
@@ -38,22 +45,18 @@ public class UserInputValidator {
 	 * @param textRead
 	 */
 	public UserInput validateInputAndCreateInputObject(String textRead) {
-		
-		UserInput input = null ;
 		if(isValidInput(textRead))
 		{
 			//create user input object
 			Pattern pattern1 = Pattern.compile("\\W");
-			String [] inputs = pattern1.split(textRead);
-			for(String value:inputs)
-			{
-				System.out.println(value);
-			}	
-			 input  = new UserInput(inputs[0],inputs[1],inputs[2],inputs[3]);	
+			
+			String []inputs = pattern1.split(textRead);
+			switch(inputs.length){ 
+				case 2: return new UserInput(inputs[0],inputs[1], null,null); 
+				case 3:	return new UserInput(inputs[0],inputs[1],inputs[2],null);
+				case 4: return new UserInput(inputs[0],inputs[1],inputs[2],inputs[3]);	
+			}
 		}
-		
-		return input;
+		return null;
 	}
-
-	
 }
