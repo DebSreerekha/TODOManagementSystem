@@ -13,6 +13,16 @@ import domain.ToDoList;
  */
 public class ToDoListManagerTest {
 	
+	public void setUpTestData(TDListManager tdlm)
+	{
+		
+		tdlm.createList(Constants.GROCERY);
+		for(int i = 1 ;i<6;i++)
+		{
+			tdlm.addItemToList(Constants.GROCERY,"TODO"+i, "TODODescription"+i);
+		}
+	}
+	
 	@Test
 	public void testListCreation()
 	{
@@ -25,14 +35,25 @@ public class ToDoListManagerTest {
 	public void testListItemAddition()
 	{
 		TDListManager tdlm = new TDListManager();
-		tdlm.createList(Constants.GROCERY);
-		tdlm.addItemToList(Constants.GROCERY,"TODO1","TODODescription1");
-		tdlm.addItemToList(Constants.GROCERY,"TODO2","TODODescription2");
-		tdlm.addItemToList(Constants.GROCERY,"TODO3","TODODescription3");
-		tdlm.addItemToList(Constants.GROCERY,"TODO4","TODODescription4");
+		setUpTestData(tdlm);
 		
 		ToDoList list = tdlm.getList(Constants.GROCERY);
-		assertEquals(4,list.getItems().size());
+		assertEquals(5,list.getItems().size());
+	}
+	@Test
+	public void testListItemAdditionWithTheSameItemName()
+	{
+		TDListManager tdlm = new TDListManager();
+		tdlm.createList(Constants.GROCERY);
+		for(int i = 1 ;i<6;i++)
+		{
+			tdlm.addItemToList(Constants.GROCERY,"TODO", "TODODescription"+i);
+		}
+		
+		ToDoList list = tdlm.getList(Constants.GROCERY);
+		//only the  first addition will be successful the rest of them will not be effective.
+		assertEquals(1,list.getItems().size());
+		assertEquals("TODODescription1",list.getItems().get("TODO").getItemDescription());
 	}
 	@Test
 	public void testListItemUpdation()
@@ -43,10 +64,7 @@ public class ToDoListManagerTest {
 		tdlm.createList(Constants.GROCERY);
 		
 		//Add items to the list
-		tdlm.addItemToList(Constants.GROCERY,"TODO1","TODODescription1");
-		tdlm.addItemToList(Constants.GROCERY,"TODO2","TODODescription2");
-		tdlm.addItemToList(Constants.GROCERY,"TODO3","TODODescription3");
-		tdlm.addItemToList(Constants.GROCERY,"TODO4","TODODescription4");
+		setUpTestData(tdlm);
 		
 		ToDoList list = tdlm.getList(Constants.GROCERY);
 		String itemdescription = list.getItems().get("TODO1").getItemDescription();
@@ -70,10 +88,7 @@ public class ToDoListManagerTest {
 		tdlm.createList(Constants.GROCERY);
 		
 		//Add items to the list
-		tdlm.addItemToList(Constants.GROCERY,"TODO1","TODODescription1");
-		tdlm.addItemToList(Constants.GROCERY,"TODO2","TODODescription2");
-		tdlm.addItemToList(Constants.GROCERY,"TODO3","TODODescription3");
-		tdlm.addItemToList(Constants.GROCERY,"TODO4","TODODescription4");
+		setUpTestData(tdlm);
 		
 		tdlm.deleteItemFromTheList(Constants.GROCERY,"TODO1");
 		LineItem  todo1 = tdlm.getList(Constants.GROCERY).getLineItem("TODO1");

@@ -55,13 +55,13 @@ public class UserInputValidatorTest {
 		assertEquals(inputObject6.getListname(),"GROCERIES");
 		assertEquals(inputObject6.getChoice(),6);
 		
-	/*	
+		
 		UserInput inputObject7 = inputValidator.validateInputAndCreateInputObject("7|GROCERIES|TODO1|D");
 		assertEquals(inputObject7.getListname(),"GROCERIES");
 		assertEquals(inputObject7.getChoice(),7);
 		assertEquals(inputObject7.getItemname(),"TODO1");
 		assertEquals(inputObject7.getItemStatus(),"D");
-		*/
+		
 	}
 
 }

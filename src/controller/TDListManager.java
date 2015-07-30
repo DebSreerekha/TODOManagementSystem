@@ -8,7 +8,7 @@ import domain.ToDoList;
 /**
  * This class is the controller class in the application 
  * with commands to add update delete and view the items in the 
- * todolists created .
+ * toDoLists created .
  * @author sreerekhadeb
  * 
  */
@@ -16,18 +16,18 @@ public class TDListManager  {
 	/**
 	 * Instance variable to hold the list of the todo lists
 	 */
-	private Hashtable<String,ToDoList> ToDoLists ;
+	private Hashtable<String,ToDoList> toDoLists ;
 	
 	/**
 	 * Default constructor for the list manager 
 	 */
 	public TDListManager(){
-		ToDoLists = new Hashtable<String , ToDoList>();
+		toDoLists = new Hashtable<String , ToDoList>();
 		
 	}
 	/** 
 	 * Creates the list with the specified name and adds it to the hashtable containing all the 
-	 * ToDoLists
+	 * toDoLists
 	 * 
 	 * @param listName
 	 * @return
@@ -35,37 +35,37 @@ public class TDListManager  {
 	public ToDoList createList(String listName)
 	{
 		ToDoList todoList = new ToDoList(listName);
-		ToDoLists.put(listName, todoList);
+		toDoLists.put(listName, todoList);
 		return todoList;
 	}
 	
 	/**
 	 * Updates the item in the list with the specified list name
 	 * @param list
-	 * @param itemname
+	 * @param itemName
 	 */
-	public void updateItemInTheList(String listname, String itemname,String itemDescription)
+	public void updateItemInTheList(String listName, String itemName,String itemDescription)
 	{
-		ToDoList list = ToDoLists.get(listname);
-		list.updateLineItem(itemname,itemDescription);
+		ToDoList list = toDoLists.get(listName);
+		list.updateLineItem(itemName,itemDescription);
 	}
 	/**
 	 * Deletes the item with the specified key from the specified list
 	 * @param list
 	 * @param key
 	 */
-	public void deleteItemFromTheList(String listname , String itemName)
+	public void deleteItemFromTheList(String listName , String itemName)
 	{
-		ToDoList list = ToDoLists.get(listname);
+		ToDoList list = toDoLists.get(listName);
 		list.deletItem(itemName);
 	}
 	/**
 	 * Displays the contents of the list
 	 */
-	public void viewList(String listname)
+	public void viewList(String listName)
 	{
-		ToDoList list = ToDoLists.get(listname);
-		list.viewItemsInTheList(listname);
+		ToDoList list = toDoLists.get(listName);
+		list.viewItemsInTheList(listName);
 	}
 	
 	/**
@@ -75,30 +75,37 @@ public class TDListManager  {
 	 */
 	public ToDoList getList(String listName) {
 		
-		return ToDoLists.get(listName);
+		return toDoLists.get(listName);
 		
 	}
 	
 	/**
-	 * create the lineitem with the specified itemname and description and add it to the list with the given listname
-	 * @param listname
-	 * @param itemname
+	 * create the lineitem with the specified itemName and description and add it to the list with the given listName
+	 * @param listName
+	 * @param itemName
 	 * @param description
 	 */
-	public void addItemToList(String listname, String itemname, String description) {
-		ToDoList list = ToDoLists.get(listname);
-		list.addLineItem(new LineItem(itemname,description));
+	public boolean addItemToList(String listName, String itemName, String description) {
+		ToDoList list = toDoLists.get(listName);
+		LineItem item = list.getLineItem(itemName);
+		boolean status = false ;
+		if(item == null)
+		{
+			list.addLineItem(new LineItem(itemName,description));
+			status = true ;
+		}
+		return status ;
 	}
 	
 	/**
-	 * Displays the list item in the specified list with the given listname.
-	 * @param listname
-	 * @param itemname
+	 * Displays the list item in the specified list with the given listName.
+	 * @param listName
+	 * @param itemName
 	 */
-	public void viewListItem(String listname, String itemname) {
+	public void viewListItem(String listName, String itemName) {
 		
-		ToDoList list = ToDoLists.get(listname);
-		System.out.println(itemname + ":"+list.getLineItem(itemname).getItemDescription());
+		ToDoList list = toDoLists.get(listName);
+		System.out.println(itemName + ":"+list.getLineItem(itemName).getItemDescription());
 	}
 	/**
 	 * Updates the status of the item in the specified list.
@@ -108,7 +115,7 @@ public class TDListManager  {
 	 * @param status
 	 */
 	public void updateStatus(String listName,String itemName,String status) {
-		ToDoList list = ToDoLists.get(listName);
+		ToDoList list = toDoLists.get(listName);
 		list.getLineItem(itemName).setStatus(status);
 	}
 }
