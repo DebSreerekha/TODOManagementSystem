@@ -21,8 +21,7 @@ public class UserInputValidator {
 	/**
 	 * No args Constructor
 	 */
-	public UserInputValidator()
-	{
+	public UserInputValidator() {
 		regex= "[1-7]{1}([|][a-z1-9A-Z]{1,}){1,3}" ;
 		pattern = Pattern.compile(regex);
 	}
@@ -33,8 +32,7 @@ public class UserInputValidator {
 	 * @param inputString
 	 * @return
 	 */
-	public boolean isValidInput(String inputString)
-	{
+	public boolean isValidInput(String inputString) {
 		return pattern.matches(regex, inputString);
 	}
 	
@@ -46,8 +44,7 @@ public class UserInputValidator {
 	 */
 	public UserInput validateInputAndCreateInputObject(String textRead) {
 		
-		if(isValidInput(textRead))
-		{
+		if(isValidInput(textRead)) {
 			//create user input object
 			Pattern pattern1 = Pattern.compile("\\W");
 			

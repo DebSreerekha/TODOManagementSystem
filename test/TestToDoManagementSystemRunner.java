@@ -8,8 +8,7 @@
 	 *
 	 */
 	public class TestToDoManagementSystemRunner {
-	 public static void main(String []args)
-	 {
+	 public static void main(String []args) {
 		 System.out.println("inside the test runner class");
 		 Result result = JUnitCore.runClasses(ToDoListTest.class);
 		 for (Failure failure : result.getFailures()) {

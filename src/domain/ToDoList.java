@@ -36,12 +36,10 @@ public class ToDoList {
 	 * @param key
 	 * @return
 	 */
-	public LineItem getLineItem(String key)
-	{
+	public LineItem getLineItem(String key) {
 		Enumeration<LineItem> enumeration = items.elements();
 		LineItem  item = null;
-		while(enumeration.hasMoreElements())
-		{
+		while(enumeration.hasMoreElements()) {
 			LineItem tempItem = enumeration.nextElement();
 			String tempKey = tempItem.getItemName();
 			if (tempKey.equals(key)){
@@ -55,8 +53,7 @@ public class ToDoList {
 	/**
 	 * update the line item with the specified key
 	 */
-	public void updateLineItem(String itemName, String description)
-	{
+	public void updateLineItem(String itemName, String description) {
 		LineItem item = getLineItem(itemName);
 		item.setItemDescription(description);
 	}
@@ -65,8 +62,7 @@ public class ToDoList {
 	 * @param item
 	 */
 
-	public  void updateLineItem(LineItem item)
-	{
+	public  void updateLineItem(LineItem item) {
 		items.put(item.getItemName(),item);
 		
 	}
@@ -76,8 +72,7 @@ public class ToDoList {
 	 * @param item
 	 */
 	
-	public void addLineItem(LineItem item)
-	{
+	public void addLineItem(LineItem item) {
 		this.items.put(item.getItemName(),item);
 	}
 	/**
@@ -86,13 +81,12 @@ public class ToDoList {
 	 * @param key
 	 * @param value
 	 */
-	public void addLineItem(String itemName,String description)
-	{
+	public void addLineItem(String itemName,String description) {
 		items.put(itemName,new LineItem(itemName,description));
 	}
 	/**
 	 * Get the list name
-	 * @return
+	 * @return string
 	 */
 	public String getListName() {
 		return listName;
@@ -111,6 +105,7 @@ public class ToDoList {
 	public Hashtable<String,LineItem> getItems() {
 		return items;
 	}
+
 	/**
 	 * Set the items in the list 
 	 * @param items
@@ -118,12 +113,12 @@ public class ToDoList {
 	public void setItems(Hashtable<String,LineItem> items) {
 		this.items = items;
 	}
+
 	/** 
 	 * Delete an item from the list
 	 * @param string
 	 */
-	public void deletItem(String itemName) {
-		
+	public void deleteItem(String itemName) {
 		items.remove(itemName);
 	}
 	
@@ -142,8 +137,7 @@ public class ToDoList {
 		System.out.println(" name 		Description		Status		Timestamp  ");
 		System.out.println("****************************************************");
 		
-		while(enumeration.hasMoreElements())
-		{
+		while(enumeration.hasMoreElements()){
 			LineItem item = (LineItem) enumeration.nextElement();
 			System.out.println(item.getItemName() + "\t"+item.getItemDescription()+"/t" +item.getStatus()+"\t"+item.getTimeStamp());	
 		}

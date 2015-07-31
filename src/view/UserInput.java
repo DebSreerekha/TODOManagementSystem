@@ -16,8 +16,7 @@ public class UserInput {
 	
 	
 	public UserInput(String choice, String listname, String itemname ,String itemDescription) {
-		// TODO Auto-generated constructor stub
-		
+
 		this.choice = Integer.parseInt(choice) ;
 		this.itemname = itemname ;
 		this.listname = listname ;
@@ -25,15 +24,12 @@ public class UserInput {
 		this.itemStatus = Constants.STATUS_ADDED ;
 	}
 	
-	public UserInput(String choice,String listname,String itemname,String status,int mode )
-	{
-		if(mode ==7)
-		{
+	public UserInput(String choice,String listname,String itemname,String status,int mode ) {
+		if(mode ==7) {
 			this.choice = Integer.parseInt(choice) ;
 			this.itemname = itemname ;
 			this.listname = listname ;
 			this.itemStatus = status ;
-			
 		}
 	}
 	public int getChoice() {
@@ -61,7 +57,6 @@ public class UserInput {
 		this.itemDescription = itemDescription;
 	}
 	public String  getItemStatus() {
-		// TODO Auto-generated method stub
 		return itemStatus;
 	}
 	public void setItemStatus(String status) {

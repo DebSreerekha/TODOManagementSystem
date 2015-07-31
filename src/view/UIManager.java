@@ -28,10 +28,9 @@ public class UIManager  {
 	/**
 	 * No arguments constructor
 	 */
-	public UIManager()
-	{
+	public UIManager() {
 		tdlmanager = new TDListManager();
-		
+		tdlmanager.cleanUpRecentlyFinishedList();
 		displayMenu();
 		
 		scanner = new Scanner(System.in) ;
@@ -44,8 +43,7 @@ public class UIManager  {
 	/**
 	 * Displays the interactive menu
 	 */
-	public void displayMenu()
-	{
+	public void displayMenu() {
 		System.out.println("*********************************************************");
 		System.out.println("Welcome to the TODO Management System");
 		System.out.println("*********************************************************");
@@ -68,87 +66,79 @@ public class UIManager  {
 	 * controller package.
 	 * 
 	 */
-	public  void acceptUserInputInteractively()
-	{
-		
+	public  void acceptUserInputInteractively() {
+
 		String textRead;
 		while(scanner.hasNextLine())
 		{
 			textRead = scanner.nextLine() ;
-			if(inputValidator.isValidInput(textRead) )
-			{
+			if(inputValidator.isValidInput(textRead) ) {
 				UserInput inputObject = inputValidator.validateInputAndCreateInputObject(textRead);
 				processInput(inputObject) ;
 				
 			}
-			else
-			{
+			else {
 				System.out.println("Invalid user input .. displaying menu again .. enter the data  in the suggested format");
 				displayMenu();
 			}
 		}
-		
-		
 	}
-	
-	
+
 	/**
-	 	 * This method contains the code to process the entered input string and perform the 
-	 	 * corresponding operation .
-	 	 * 
-	 	 * @param textRead
-	 	 */
-	 	public void processInput(UserInput  inputObject) {
-	 		
-	 		switch(inputObject.getChoice())
-	 		{
-	 			case 1:
-	 				System.out.println("Listname to be created :" + inputObject.getListname());
-	 				tdlmanager.createList(inputObject.getListname());
-	 				System.out.println("Created list ..:" + inputObject.getListname());
-	 				break;
-	 			case 2:
-	 				System.out.println("Adding item to list with name :" +inputObject.getListname() + "item to be added :" +inputObject.getItemname());
-	 				boolean status = tdlmanager.addItemToList(inputObject.getListname(),inputObject.getItemname(),inputObject.getItemDescription());
-	 				if(status)
-	 					System.out.println("Added the item to the list .." );
-	 				else
-	 					System.out.println("item could not be added as it already exists .. use update option to update the existing object .." );
-	 				break;
-	 			case 3:
-	 				System.out.println("Delete item from the list with the list name:" +inputObject.getListname()+ "item to be deleted"+inputObject.getItemname());
-	 				tdlmanager.deleteItemFromTheList(inputObject.getListname(),inputObject.getItemname());
-	 				System.out.println("Deleted the item from the list ..");
-	 				break;
-	 			case 4:
-	 				System.out.println("Update item in the list with the listname :" +inputObject.getListname()+"item to be updated"+inputObject.getItemname());
-	 				tdlmanager.updateItemInTheList(inputObject.getListname(),inputObject.getItemname(),inputObject.getItemDescription());
-	 				System.out.println("Updated the item in the list .. ");
-	 				break;
-	 			case 5:
-	 				System.out.println("Fetch item from the list with the listname :"+inputObject.getListname() + "item name "+inputObject.getItemname());
-	 				tdlmanager.viewListItem(inputObject.getListname(),inputObject.getItemname());
-	 				System.out.println("Fetched the item from the list ..");
-	 				break;
-	 			case 6:
-	 				System.out.println("Displaying  all the items in the list with listname :" +inputObject.getListname());
-	 				tdlmanager.viewList(inputObject.getListname());
-	 				break;
-	 			case 7:
-	 				System.out.println("Update the status of the item in the list "+inputObject.getItemStatus());
-	 				tdlmanager.updateStatus(inputObject.getListname(), inputObject.getItemname(), inputObject.getItemStatus());
-	 				System.out.println("Status update done ... ");
-	 				break;
-	 		}
-	 		
-	 	}
+	 * This method contains the code to process the entered input string and perform the
+	 * corresponding operation .
+	 *
+	 * @param textRead
+	 */
+	public void processInput(UserInput  inputObject) {
+
+		switch(inputObject.getChoice()) {
+			case 1:
+				System.out.println("Listname to be created :" + inputObject.getListname());
+				tdlmanager.createList(inputObject.getListname());
+				System.out.println("Created list ..:" + inputObject.getListname());
+				break;
+			case 2:
+				System.out.println("Adding item to list with name :" +inputObject.getListname() + "item to be added :" +inputObject.getItemname());
+				boolean status = tdlmanager.addItemToList(inputObject.getListname(),inputObject.getItemname(),inputObject.getItemDescription());
+				if(status)
+					System.out.println("Added the item to the list .." );
+				else
+					System.out.println("item could not be added as it already exists .. use update option to update the existing object .." );
+				break;
+			case 3:
+				System.out.println("Delete item from the list with the list name:" +inputObject.getListname()+ "item to be deleted"+inputObject.getItemname());
+				tdlmanager.deleteItemFromTheList(inputObject.getListname(),inputObject.getItemname());
+				System.out.println("Deleted the item from the list ..");
+				break;
+			case 4:
+				System.out.println("Update item in the list with the listname :" +inputObject.getListname()+"item to be updated"+inputObject.getItemname());
+				tdlmanager.updateItemInTheList(inputObject.getListname(),inputObject.getItemname(),inputObject.getItemDescription());
+				System.out.println("Updated the item in the list .. ");
+				break;
+			case 5:
+				System.out.println("Fetch item from the list with the listname :"+inputObject.getListname() + "item name "+inputObject.getItemname());
+				tdlmanager.viewListItem(inputObject.getListname(),inputObject.getItemname());
+				System.out.println("Fetched the item from the list ..");
+				break;
+			case 6:
+				System.out.println("Displaying  all the items in the list with listname :" +inputObject.getListname());
+				tdlmanager.viewList(inputObject.getListname());
+				break;
+			case 7:
+				System.out.println("Update the status of the item in the list "+inputObject.getItemStatus());
+				tdlmanager.updateStatus(inputObject.getListname(), inputObject.getItemname(), inputObject.getItemStatus());
+				System.out.println("Status update done ... ");
+				break;
+		}
+
+	}
 
 	/**
 	 * main function to test run 
 	 * @param args
 	 */
-	public static void main(String []args)
-	{
+	public static void main(String []args) {
 		new UIManager();
 	}
 }

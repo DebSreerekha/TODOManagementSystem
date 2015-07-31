@@ -14,9 +14,9 @@ import domain.ToDoList;
 public class ToDoListTest {
 	
 	@Test
-	public void checkListAddition()
-	{
+	public void checkListAddition() {
 		//create a list
+
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
 		//add items to the list 
@@ -29,8 +29,7 @@ public class ToDoListTest {
 		
 	}
 	@Test
-	public void checkListItemExtraction()
-	{
+	public void checkListItemExtraction() {
 		//create a list
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
@@ -47,8 +46,7 @@ public class ToDoListTest {
 	}
 	
 	@Test
-	public void checkListItemDeletion()
-	{
+	public void checkListItemDeletion() {
 		
 		//create a list
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
@@ -58,7 +56,7 @@ public class ToDoListTest {
 		tdl.addLineItem("Key2", "Value2");
 		
 		//delete an item from the list
-		tdl.deletItem("Key1");
+		tdl.deleteItem("Key1");
 		
 		LineItem Value1 = ((LineItem)tdl.getLineItem("Key1"));
 		
@@ -66,8 +64,7 @@ public class ToDoListTest {
 	}
 	
 	@Test
-	public void checkListItemUpdation()
-	{
+	public void checkListItemUpdation() {
 		//create a list
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		

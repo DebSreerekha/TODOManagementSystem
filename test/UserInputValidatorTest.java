@@ -8,8 +8,7 @@ import view.UserInputValidator;
 
 public class UserInputValidatorTest {
 	@Test
-	public void checkIfInputIsValid()
-	{
+	public void checkIfInputIsValid() {
 		UserInputValidator inputValidator = new UserInputValidator();
 		assertEquals(true,inputValidator.isValidInput("1|GROCERIES"));
 		assertEquals(true,inputValidator.isValidInput("2|GROCERIES|TODO1"));
@@ -17,8 +16,7 @@ public class UserInputValidatorTest {
 		assertEquals(true,inputValidator.isValidInput("4|GROCERIES|TODO1|DESCRIPTION"));
 	}
 	@Test
-	public void checkIfInputIsValidAndCreateUserInputObject()
-	{
+	public void checkIfInputIsValidAndCreateUserInputObject() {
 		//Validate Data and create a user input object
 		UserInputValidator inputValidator = new UserInputValidator();
 		
