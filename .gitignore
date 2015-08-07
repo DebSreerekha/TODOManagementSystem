@@ -1,4 +1,11 @@
+.DS_Store
+**/.DS_Store
 /bin/
 *.classpath
 *.class
 *.project
+*.iml
+.idea/
+*.ipr
+*.iws
+/out/

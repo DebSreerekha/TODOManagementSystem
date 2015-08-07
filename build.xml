@@ -1,19 +1,57 @@
-<?xml version="1.0"?>:
+<?xml version="1.0"?>
 <project name="TODOManagementSystem" basedir="." default="main">
-    <property name="dir.src"     value="src"/>
-    <property name="dir.build"   value="build"/>
-    <property name="dir.classes" value="${dir.build}/classes"/>
-    <property name="dir.jar"     value="${dir.build}/jar"/>
+    <!-- Project source directory -->
+    <property name="dir.src"     value = "src"/>
+    <property name="dir.build"   value = "build"/>
+    <property name="dir.classes" value = "${dir.build}/classes"/>
+    <property name="dir.tests"   value = "tests" />
+    <property name="dir.testClasses"   value = "${dir.build}/classes/tests" />
+    <property name="dir.jar"     value = "${dir.build}/jar"/>
+    <property name="test.reports" value="junit_output" />
+    <property name="lib.path"    value = "lib"/>
+    <property name="main-class"  value="view/UIManager"/>
 
-    <property name="main-class"  value="src/view/UIManager"/>
+    <path id="project.classpath">
+        <pathelement path="${java.class.path}"/>
+        <pathelement location = "${dir.classes}"/>
+        <fileset dir="${lib.path}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
 
     <target name="clean">
         <delete dir="${dir.build}"/>
     </target>
 
-    <target name="compile">
+    <target name="compile" >
         <mkdir dir="${dir.classes}"/>
-        <javac srcdir="${dir.src}" destdir="${dir.classes}"/>
+        <mkdir dir="${dir.testClasses}"/>
+
+        <javac srcdir="${dir.src}" destdir="${dir.classes}" classpathref="project.classpath" includeantruntime="false"/>
+        <javac srcdir="${dir.tests}" destdir="${dir.testClasses}"  classpathref="project.classpath" includeantruntime="false" />
+    </target>
+
+    <target name = "test" depends="compile" >
+        <delete dir ="${test.reports}" />
+        <mkdir dir="${test.reports}"/>
+        <junit fork="no">
+            <formatter type="plain" usefile="false"/>
+            <classpath>
+                <pathelement location="${dir.testClasses}/"/>
+                <pathelement path="${java.class.path}"/>
+                <pathelement path="${dir.classes}"/>
+                <pathelement path="lib/junit-4.11.jar"/>
+                <pathelement path="lib/hamcrest-core-1.3.jar"/>
+                <pathelement path="lib/ant-junit-1.8.2.jar"/>
+            </classpath>
+
+            <batchtest todir="${test.reports}">
+                <fileset dir="${dir.tests}">
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+
+        </junit>
     </target>
 
     <target name="jar" depends="compile">
@@ -25,10 +63,5 @@
         </jar>
     </target>
 
-    <target name="run" depends="jar">
-        <java jar="${dir.jar}/${ant.project.name}.jar" fork="true"/>
-    </target>
-
-    <target name="clean-build" depends="clean,jar"/>
-    <target name="main" depends="clean,run"/>
+    <target name="main" depends="clean,compile,test,jar"/>
 </project>

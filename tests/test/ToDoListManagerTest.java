@@ -1,3 +1,5 @@
+package test;
+
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -124,7 +126,7 @@ public class ToDoListManagerTest {
 		//Add items to the list
 		setUpTestData(tdlm);
 
-		LineItem recentlydoneInToDOList = tdlm.getList(Constants.GROCERY).getLineItem("TODO1") ;
+		//LineItem recentlyDoneInToDOList = tdlm.getList(Constants.GROCERY).getLineItem("TODO1") ;
 
 		tdlm.updateStatus(Constants.GROCERY,"TODO1",Constants.STATUS_DONE);
 
