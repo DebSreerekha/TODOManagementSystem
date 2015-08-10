@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<project name="TODOManagementSystem" basedir="." default="main">
-    <!-- Project source directory -->
+<project name="TODOManagementSystem" basedir="." default="main">    
 
     <property name="dir.src"     value = "src"/>
     <property name="dir.build"   value = "build"/>
@@ -11,7 +10,6 @@
     <property name="test.reports" value="junit_output" />
     <property name="lib.path"    value = "lib"/>
     <property name="main-class"  value="view/UIManager"/>
-    <!--<property name="test.haltonfailure"  value="true" />-->
 
 
     <path id="project.classpath">
