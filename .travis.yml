@@ -5,5 +5,5 @@ notifications:
     recipients:
       - sreerekh@thoughtworks.com
       - sree.deb@gmail.com
-     on_success: change
+     on_success: always
      on_failure: always
