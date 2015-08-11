@@ -63,7 +63,7 @@ public class ToDoListManagerTest {
 		
 		ToDoList list = tdlm.getList(Constants.GROCERY);
 		String itemdescription = list.getItems().get("TODO1").getItemDescription();
-		assertEquals(itemdescription,"TODODescription1");
+		assertEquals(itemdescription,"TODODescription12");
 		
 		//Update items from the list
 		tdlm.updateItemInTheList(Constants.GROCERY, "TODO1", "itemDescription1");
