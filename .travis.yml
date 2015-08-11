@@ -4,6 +4,6 @@ notifications:
   email:
      recipients:
       - sreerekh@thoughtworks.com
-      - gluthra@thoughtworks.com
+      - sree.deb@gmail.com
      on_success: change
      on_failure: always
