@@ -62,5 +62,6 @@ Need to migrate to IntelliJ IDE later.
 
 
 
+[![Build Status](https://travis-ci.org/DebSreerekha/TODOManagementSystem.png)](https://travis-ci.org/[DebSreerekha]/[TODOManagementSystem])
 
 
