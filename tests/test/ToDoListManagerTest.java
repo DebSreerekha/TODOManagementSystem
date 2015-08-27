@@ -67,6 +67,8 @@ public class ToDoListManagerTest {
 		
 		//Update items from the list
 		tdlm.updateItemInTheList(Constants.GROCERY, "TODO1", "itemDescription1");
+
+
 		ToDoList list1 = tdlm.getList(Constants.GROCERY);
 		String itemdescription1 = list1.getItems().get("TODO1").getItemDescription();
 		
