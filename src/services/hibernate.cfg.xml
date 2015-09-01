@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/TODOMANAGER</property>
+        <property name="hibernate.connection.username">sreerekhadeb</property>
+        <property name="hibernate.connection.password">Thoughtwor*5</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <property name="show_sql">true</property>
+        <property name="connection.pool_size">5</property>
+      <!--  <mapping resource ="services/lineitem.hbm.xml" />-->
+       <mapping resource ="services/todolist.hbm.xml" />
+       <!-- <mapping resource ="services/todolistcollection.hbm.xml" />-->
+    </session-factory>
+
+</hibernate-configuration>

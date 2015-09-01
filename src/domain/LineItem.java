@@ -1,17 +1,30 @@
 package domain;
+import java.io.Serializable;
 import java.util.Date;
 /**
  * @author sreerekhadeb
  *
  */
-public class LineItem {
+public class LineItem implements Serializable{
+
+	private long id ;
 	/**
 	 * unique name of the item to be added
 	 */
 	private String itemName;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	/**
 	 * item description
 	 */
+
 	private String itemDescription;
 	/**
 	 * item status
@@ -21,6 +34,15 @@ public class LineItem {
 	 * date when the item was created.
 	 */
 	private Date timeStamp;
+	/**
+	 * The name of the list to which the item belongs
+	 */
+	//private String  listName ;
+
+	public LineItem()
+	{
+
+	}
 
 	/**
 	 * Public constructor.
@@ -36,7 +58,23 @@ public class LineItem {
 		this.timeStamp = new Date();
 				
 	}
+	public LineItem(String key,String value,String listName)
+	{
+		this.itemName = key ;
+		this.itemDescription = value;
+		this.status = Constants.STATUS_ADDED ;
+		this.timeStamp = new Date();
+//		this.listName = listName ;
+	}
 
+//	public void setListName(String listname)
+//	{
+//		this.listName = listname ;
+//	}
+//	public String getListName()
+//	{
+//		return listName;
+//	}
 	/**
 	 * returns the item name
 	 * @return

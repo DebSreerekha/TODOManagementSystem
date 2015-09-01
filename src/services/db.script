@@ -1,0 +1,21 @@
+createdb TODOMANAGER;
+
+psql -h localhost -p 5432 TODOMANAGER;
+
+create table List (
+   id SERIAL NOT NULL ,
+   first_name CHARACTER(20) default NULL,
+   last_name  CHARACTER(20) default NULL,
+   salary     INT  default NULL,
+   PRIMARY KEY (id)
+);
+
+create table CERTIFICATE (
+   id SERIAL NOT NULL ,
+   certificate_name CHARACTER(30) default NULL,
+   idx INT default NULL,
+   employee_id INT REFERENCES EMPLOYEE(ID),
+   PRIMARY KEY (id)
+);
+
+grant all privileges on database testdb to sreerekhadeb;

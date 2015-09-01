@@ -1,55 +1,63 @@
 package domain;
 
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Enumeration;
-import java.util.Hashtable;
-/**
- * This class encapsulates the ToDOList Object .
- * 
- * @author sreerekha
- *
- */
-public class ToDoList {
-	
-	/**
-	 * list name
-	 */
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Collection;
+import java.util.Iterator;
+
+public class ToDoList implements Serializable{
+
+	private int id;
 	private String listName;
-	
-	/**
-	 * items  stored in the current list
-	 */
-	private Hashtable<String,LineItem> items;
-	
-	/**
-	 * public constructor 
-	 * 
-	 * @param listName2
-	 */
-	public ToDoList(String listName2) {
-		
-		items = new Hashtable <String,LineItem>();
-		this.listName = listName2 ;
+	private Map<String,LineItem> items;
+	private Date timeStamp;
+
+	public ToDoList() {
+		items = new HashMap<String,LineItem>();
+		timeStamp = new Date();
 	}
-	
-	/**
-	 * Fetch the line item with the specified key
-	 * @param key
-	 * @return
-	 */
+
+	public ToDoList(String listName) {
+		items = new HashMap<String,LineItem>();
+		this.listName = listName ;
+		timeStamp = new Date();
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Date getTimeStamp() {
+		return timeStamp;
+	}
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
 	public LineItem getLineItem(String key) {
-		Enumeration<LineItem> enumeration = items.elements();
+		//Enumeration<LineItem> enumeration = items.elements();
+		Collection<LineItem> values = items.values();
 		LineItem  item = null;
-		while(enumeration.hasMoreElements()) {
-			LineItem tempItem = enumeration.nextElement();
+		Iterator<LineItem>  iterator = values.iterator();
+		while(iterator.hasNext()) {
+			LineItem tempItem = iterator.next();
 			String tempKey = tempItem.getItemName();
 			if (tempKey.equals(key)){
 				item = tempItem;
 				break;
 			}
 		}
-		
+
 		return item;
 	}
+
 	/**
 	 * update the line item with the specified key
 	 */
@@ -73,13 +81,13 @@ public class ToDoList {
 	 */
 	
 	public void addLineItem(LineItem item) {
-		this.items.put(item.getItemName(),item);
+		this.items.put(item.getItemName(), item);
 	}
 	/**
 	 * Constructs an new LineItem object and adds it to the list
 	 * 
-	 * @param key
-	 * @param value
+	 * @param itemName
+	 * @param description
 	 */
 	public void addLineItem(String itemName,String description) {
 		items.put(itemName,new LineItem(itemName,description));
@@ -99,10 +107,10 @@ public class ToDoList {
 		this.listName = listName;
 	}
 	/**
-	 * Return the list of items 
+	 * Return the list of items
 	 * @return
 	 */
-	public Hashtable<String,LineItem> getItems() {
+	public Map<String, LineItem> getItems() {
 		return items;
 	}
 
@@ -110,13 +118,13 @@ public class ToDoList {
 	 * Set the items in the list 
 	 * @param items
 	 */
-	public void setItems(Hashtable<String,LineItem> items) {
+	public void setItems(Map<String,LineItem> items) {
 		this.items = items;
 	}
 
 	/** 
 	 * Delete an item from the list
-	 * @param string
+	 * @param itemName
 	 */
 	public void deleteItem(String itemName) {
 		items.remove(itemName);
@@ -127,8 +135,9 @@ public class ToDoList {
 	 * 
 	 */
 	public void viewItemsInTheList(String listname) {
-		
-		Enumeration<LineItem> enumeration = items.elements();
+
+		Collection<LineItem> values = items.values();
+		Iterator<LineItem>  iterator = values.iterator();
 		
 		System.out.println("TODOList name :" + this.getListName()) ;
 		System.out.println("Printing the contents ....");
@@ -137,11 +146,11 @@ public class ToDoList {
 		System.out.println(" name 		Description		Status		Timestamp  ");
 		System.out.println("****************************************************");
 		
-		while(enumeration.hasMoreElements()){
-			LineItem item = (LineItem) enumeration.nextElement();
+		while(iterator.hasNext()){
+			LineItem item = (LineItem) iterator.next();
 			System.out.println(item.getItemName() + "\t"+item.getItemDescription()+"/t" +item.getStatus()+"\t"+item.getTimeStamp());	
 		}
-		
+
 	}
 	
 }

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="domain.ToDoList" table="List">
+        <id name="id" type="int" column="id">
+            <generator class="native" />
+        </id>
+        <timestamp name="timeStamp" column="creationdate" />
+        <property  name="listName"  column="listname"     type="string" />
+        <map name="items" cascade="all" >
+            <key   column="listid" />
+            <index column="itemname" type="string" />
+            <one-to-many class="domain.LineItem" />
+        </map>
+    </class>
+
+    <class name="domain.LineItem" table="ListItem">
+        <id name="id" column="id" type="long">
+            <generator class="native"/>
+        </id>
+        <timestamp name="timeStamp"       column="timestamp" />
+        <property  name="itemName"        column="itemname"        type="text" />
+        <property  name="itemDescription" column="itemdescription" type="text"/>
+        <property  name="status"          column="status"          type="text"/>
+    </class>
+
+</hibernate-mapping>
