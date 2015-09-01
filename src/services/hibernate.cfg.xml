@@ -17,9 +17,7 @@
 
         <property name="show_sql">true</property>
         <property name="connection.pool_size">5</property>
-      <!--  <mapping resource ="services/lineitem.hbm.xml" />-->
        <mapping resource ="services/todolist.hbm.xml" />
-       <!-- <mapping resource ="services/todolistcollection.hbm.xml" />-->
     </session-factory>
 
 </hibernate-configuration>
