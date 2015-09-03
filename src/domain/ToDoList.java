@@ -42,7 +42,7 @@ public class ToDoList implements Serializable{
 	}
 
 	public LineItem getLineItem(String key) {
-		//Enumeration<LineItem> enumeration = items.elements();
+
 		Collection<LineItem> values = items.values();
 		LineItem  item = null;
 		Iterator<LineItem>  iterator = values.iterator();
@@ -54,7 +54,6 @@ public class ToDoList implements Serializable{
 				break;
 			}
 		}
-
 		return item;
 	}
 
@@ -148,9 +147,8 @@ public class ToDoList implements Serializable{
 		
 		while(iterator.hasNext()){
 			LineItem item = (LineItem) iterator.next();
-			System.out.println(item.getItemName() + "\t"+item.getItemDescription()+"/t" +item.getStatus()+"\t"+item.getTimeStamp());	
+			System.out.println(item.getItemName() + "\t"+item.getItemDescription()+"\t" +item.getStatus()+"\t"+item.getTimeStamp());
 		}
-
 	}
 	
 }

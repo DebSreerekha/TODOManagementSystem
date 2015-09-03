@@ -1,10 +1,10 @@
 package controller;
-import java.util.*;
+
 
 import domain.Constants;
 import domain.LineItem;
 import domain.ToDoList;
-import domain.ToDoListCollection;
+import services.ListManagerService;
 
 /**
  * This class is the controller class in the application 
@@ -13,25 +13,21 @@ import domain.ToDoListCollection;
  * @author sreerekhadeb
  * 
  */
-public class TDListManager implements ListManagement {
+public class TDListManager  {
 	/**
-	 * Domain object to contain the collection of the lists
+	 * The service to perform  the list management
 	 */
-	private ToDoListCollection listCollection ;
+	public ListManagerService listManagerService ;
 	/**
 	 * Default constructor for the list manager 
 	 */
 	public TDListManager(){
-		listCollection = new ToDoListCollection();
+		listManagerService = new ListManagerService();
+		cleanUpRecentlyFinishedList();
 	}
 
-
-	/**
-	 * get the recently finsihed items list
-	 * @return
-	 */
 	public ToDoList getRecentlyFinishedList() {
-		return listCollection.getRecentlyFinishedList() ;
+		return ListManagerService.getListCollection().getToDoLists().get(Constants.RECENTLY_FINISHED_LIST);
 	}
 
 	/**
@@ -39,13 +35,10 @@ public class TDListManager implements ListManagement {
 	 * @param completed_item
 	 */
 	public void setItemInTheRecentlyFinishedList(LineItem completed_item) {
-		listCollection.getRecentlyFinishedList().addLineItem(completed_item);
+
+		getRecentlyFinishedList().addLineItem(completed_item);
 	}
 
-//	@Override
-//	public void addListName(String grocery) {
-//		listCollection.createNewList(grocery);
-//	}
 
 	/**
 	 * Creates the list with the specified name and adds it to the hashtable containing all the 
@@ -55,9 +48,7 @@ public class TDListManager implements ListManagement {
 	 * @return
 	 */
 	public ToDoList createList(String listName) {
-		ToDoList todoList = new ToDoList(listName);
-		listCollection.getToDoLists().put(listName, todoList);
-		return todoList;
+		return listManagerService.createList(listName);
 	}
 	
 	/**
@@ -66,8 +57,7 @@ public class TDListManager implements ListManagement {
 	 * @param itemName
 	 */
 	public void updateItemInTheList(String listName, String itemName,String itemDescription) {
-		ToDoList list = listCollection.getToDoLists().get(listName);
-		list.updateLineItem(itemName, itemDescription);
+		listManagerService.updateLineItemDescription(itemName,itemDescription,Constants.STATUS_UPDATE,listName);
 	}
 	/**
 	 * Deletes the item with the specified key from the specified list
@@ -75,17 +65,13 @@ public class TDListManager implements ListManagement {
 	 * @param itemName
 	 */
 	public void deleteItemFromTheList(String listName , String itemName) {
-		ToDoList list = listCollection.getToDoLists().get(listName);
-		LineItem item = list.getLineItem(itemName);
-		list.deleteItem(itemName);
-		getRecentlyFinishedList().addLineItem(item);
+		listManagerService.deleteLineItem(listName, itemName);
 	}
 	/**
 	 * Displays the contents of the list
 	 */
 	public void viewList(String listName) {
-		ToDoList list = listCollection.getToDoLists().get(listName);
-		list.viewItemsInTheList(listName);
+		listManagerService.listLineItems(listName);
 	}
 	
 	/**
@@ -94,7 +80,7 @@ public class TDListManager implements ListManagement {
 	 * @return
 	 */
 	public ToDoList getList(String listName) {
-		return listCollection.getToDoLists().get(listName);
+		return listManagerService.getListCollection().getToDoLists().get(listName);
 	}
 	
 	/**
@@ -104,15 +90,7 @@ public class TDListManager implements ListManagement {
 	 * @param description
 	 */
 	public boolean addItemToList(String listName, String itemName, String description) {
-		ToDoList list = listCollection.getToDoLists().get(listName);
-		LineItem item = list.getLineItem(itemName);
-		boolean status = false ;
-
-		if(item == null) {
-			list.addLineItem(new LineItem(itemName,description));
-			status = true ;
-		}
-		return status ;
+		return listManagerService.addListItem(listName,itemName,description,Constants.STATUS_ADDED);
 	}
 	
 	/**
@@ -121,9 +99,7 @@ public class TDListManager implements ListManagement {
 	 * @param itemName
 	 */
 	public void viewListItem(String listName, String itemName) {
-		
-		ToDoList list = listCollection.getToDoLists().get(listName);
-		System.out.println(itemName + ":"+list.getLineItem(itemName).getItemDescription());
+		listManagerService.showListItem(listName, itemName);
 	}
 	/**
 	 * Updates the status of the item in the specified list.
@@ -133,15 +109,10 @@ public class TDListManager implements ListManagement {
 	 * @param status
 	 */
 	public void updateStatus(String listName,String itemName,String status) {
-		ToDoList list = listCollection.getToDoLists().get(listName);
-		LineItem tempItem = list.getLineItem(itemName);
-		tempItem.setStatus(status);
-		// if the status of the item is done , it needs to be removed
-		//from the list and added to the recently finished list.
-		if(status.equals(Constants.STATUS_DONE)) {
-			list.deleteItem(itemName);
-			listCollection.getRecentlyFinishedList().addLineItem(tempItem);
-		}
+
+		listManagerService.updateLineItemStatus(listName,itemName,status);
+
+
 	}
 	/**
 	 * This method is used to clean up the recently finished items list before any further processing
@@ -149,19 +120,11 @@ public class TDListManager implements ListManagement {
 	 */
 	public void cleanUpRecentlyFinishedList() {
 
-		Map<String,LineItem>items = getRecentlyFinishedList().getItems();
-		Collection<LineItem> Values = items.values();
-		Iterator<LineItem> iterator = Values.iterator();
-		while(iterator.hasNext()) {
-			LineItem item = iterator.next() ;
-			Date date = item.getTimeStamp();
-			Date todaysDate = new Date();
+		listManagerService.cleanUpRecentlyFinishedList();
+	}
 
-			long noOfDays = (todaysDate.getTime() - date.getTime() )/(24*60*60*1000);
-
-			if(noOfDays >=3) {
-				getRecentlyFinishedList().deleteItem(item.getItemName());
-			}
-		}
+	public void displayAllTheLists()
+	{
+		listManagerService.displayAllTheLists();
 	}
 }

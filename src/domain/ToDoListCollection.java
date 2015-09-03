@@ -22,15 +22,12 @@ public class ToDoListCollection implements Serializable{
      * Instance variable to hold the list of the todo lists
      */
     private Hashtable<String,ToDoList> toDoLists ;
-    /**
-     * Instance variable to hold the recently finshed items - items whose status is done .
-     */
-    private ToDoList recentlyFinishedList ;
 
     public ToDoListCollection()
     {
         toDoLists = new Hashtable<String , ToDoList>();
-        recentlyFinishedList = new ToDoList(Constants.RECENTLY_FINISHED_LIST);
+        ToDoList recentlyFinishedList = new ToDoList(Constants.RECENTLY_FINISHED_LIST);
+        toDoLists.put(Constants.RECENTLY_FINISHED_LIST,recentlyFinishedList);
     }
 
     public Hashtable<String, ToDoList> getToDoLists() {
@@ -41,16 +38,8 @@ public class ToDoListCollection implements Serializable{
         this.toDoLists = toDoLists;
     }
 
-    public ToDoList getRecentlyFinishedList() {
-        return recentlyFinishedList;
-    }
-
-    public void setRecentlyFinishedList(ToDoList recentlyFinishedList) {
-        this.recentlyFinishedList = recentlyFinishedList;
-    }
-
-    public void createNewList(String grocery) {
-         ToDoList list = new ToDoList(grocery);
-         this.toDoLists.put(grocery,list) ;
+    public ToDoList getRecentlyFinishedList()
+    {
+        return toDoLists.get(Constants.RECENTLY_FINISHED_LIST) ;
     }
 }

@@ -64,7 +64,7 @@ public class LineItem implements Serializable{
 		this.itemDescription = value;
 		this.status = Constants.STATUS_ADDED ;
 		this.timeStamp = new Date();
-//		this.listName = listName ;
+		//this.listName = listName ;
 	}
 
 //	public void setListName(String listname)

@@ -22,7 +22,7 @@ public class UserInputValidator {
 	 * No args Constructor
 	 */
 	public UserInputValidator() {
-		regex= "[1-7]{1}([|][a-z1-9A-Z]{1,}){1,3}" ;
+		regex= "[1-9]{1}([|][a-z1-9A-Z]{1,}){1,3}" ;
 		pattern = Pattern.compile(regex);
 	}
 	
