@@ -17,10 +17,7 @@ public class ToDoListCollection implements Serializable{
         this.id = id;
     }
 
-    /**
 
-     * Instance variable to hold the list of the todo lists
-     */
     private Hashtable<String,ToDoList> toDoLists ;
 
     public ToDoListCollection()

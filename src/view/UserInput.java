@@ -9,26 +9,26 @@ import domain.Constants;
  */
 public class UserInput {
 	private int choice ;
-	private String listname;
-	private String itemname;
+	private String listName;
+	private String itemName;
 	private String itemDescription;
 	private String itemStatus ;
 	
 	
-	public UserInput(String choice, String listname, String itemname ,String itemDescription) {
+	public UserInput(String choice, String listName, String itemName ,String itemDescription) {
 
 		this.choice = Integer.parseInt(choice) ;
-		this.itemname = itemname ;
-		this.listname = listname ;
+		this.itemName = itemName ;
+		this.listName = listName ;
 		this.itemDescription = itemDescription;
 		this.itemStatus = Constants.STATUS_ADDED ;
 	}
 	
-	public UserInput(String choice,String listname,String itemname,String status,int mode ) {
+	public UserInput(String choice,String listName,String itemName,String status,int mode ) {
 		if(mode ==7) {
 			this.choice = Integer.parseInt(choice) ;
-			this.itemname = itemname ;
-			this.listname = listname ;
+			this.itemName = itemName ;
+			this.listName = listName ;
 			this.itemStatus = status ;
 		}
 	}
@@ -38,17 +38,17 @@ public class UserInput {
 	public void setChoice(int choice) {
 		this.choice = choice;
 	}
-	public String getListname() {
-		return listname;
+	public String getListName() {
+		return listName;
 	}
-	public void setListname(String listname) {
-		this.listname = listname;
+	public void setListName(String listName) {
+		this.listName = listName;
 	}
-	public String getItemname() {
-		return itemname;
+	public String getItemName() {
+		return itemName;
 	}
-	public void setItemname(String itemname) {
-		this.itemname = itemname;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 	public String getItemDescription() {
 		return itemDescription;

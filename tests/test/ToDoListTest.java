@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import domain.Constants;
-import domain.LineItem;
+import domain.ListItem;
 import domain.ToDoList;
 
 /**
@@ -22,8 +22,8 @@ public class ToDoListTest {
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
 		//add items to the list 
-		tdl.addLineItem("Key1", "Value1");
-		tdl.addLineItem("Key2", "Value2");
+		tdl.addListItem("Key1", "Value1");
+		tdl.addListItem("Key2", "Value2");
 		
 		// test if the item is added
 		int size = tdl.getItems().size();
@@ -36,11 +36,11 @@ public class ToDoListTest {
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
 		//add items to the list 
-		tdl.addLineItem("Key1", "Value1");
-		tdl.addLineItem("Key2", "Value2");
+		tdl.addListItem("Key1", "Value1");
+		tdl.addListItem("Key2", "Value2");
 		
-		String Value1 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
-		String Value2 = (String)((LineItem)tdl.getLineItem("Key2")).getItemDescription();
+		String Value1 = (String)((ListItem)tdl.getListItem("Key1")).getItemDescription();
+		String Value2 = (String)((ListItem)tdl.getListItem("Key2")).getItemDescription();
 		
 		assertEquals("Value1",Value1);
 		assertEquals("Value2",Value2);
@@ -54,13 +54,13 @@ public class ToDoListTest {
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
 		//add items to the list 
-		tdl.addLineItem("Key1", "Value1");
-		tdl.addLineItem("Key2", "Value2");
+		tdl.addListItem("Key1", "Value1");
+		tdl.addListItem("Key2", "Value2");
 		
 		//delete an item from the list
 		tdl.deleteItem("Key1");
 		
-		LineItem Value1 = ((LineItem)tdl.getLineItem("Key1"));
+		ListItem Value1 = ((ListItem)tdl.getListItem("Key1"));
 		
 		assertEquals(null,Value1) ;
 	}
@@ -71,13 +71,13 @@ public class ToDoListTest {
 		ToDoList tdl = new ToDoList(Constants.PERSONAL);
 		
 		//add items to the list 
-		tdl.addLineItem("Key1", "Value1");
-		tdl.addLineItem("Key2", "Value2");
+		tdl.addListItem("Key1", "Value1");
+		tdl.addListItem("Key2", "Value2");
 		
 		//delete an item from the list
-		tdl.updateLineItem("Key1","Value11");
+		tdl.updateListItem("Key1","Value11");
 		
-		String Value11 = (String)((LineItem)tdl.getLineItem("Key1")).getItemDescription();
+		String Value11 = (String)((ListItem)tdl.getListItem("Key1")).getItemDescription();
 		
 		assertEquals("Value11",Value11) ;
 		

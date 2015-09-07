@@ -19,3 +19,7 @@ create table CERTIFICATE (
 );
 
 grant all privileges on database testdb to sreerekhadeb;
+
+to create the RFIL in the database as a defaut list with id =1;
+
+insert into list (listname,creationdate,id) values ('RFIL',CURRENT_TIMESTAMP,1);

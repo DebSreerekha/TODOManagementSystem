@@ -1,37 +1,22 @@
 package view;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
-import controller.TDListManager;
-import domain.Constants;
+import controller.ToDoListManager;
 
-/**
- * This class is used to handle all the command based user interface related functionality.
- * 
- * @author sreerekhadeb
- *
- */
+
 public class UIManager  {
-	/**
-	 * Reference to the TDListManager
-	 */
-	private TDListManager tdlmanager ;
-	/**
-	 * Scanner class to accept the user input via the command prompt
-	 */
+
+	private ToDoListManager toDoListManager;
+
 	private Scanner scanner ;
-	/**
-	 * Validator Object to perform validations
-	 */
+
 	private UserInputValidator inputValidator ;
 	
-	/**
-	 * No arguments constructor
-	 */
+
 	public UIManager() {
-		tdlmanager = new TDListManager();
-		tdlmanager.cleanUpRecentlyFinishedList();
+		toDoListManager = new ToDoListManager();
+		toDoListManager.cleanUpRecentlyFinishedList();
 		displayMenu();
 		
 		scanner = new Scanner(System.in) ;
@@ -41,9 +26,7 @@ public class UIManager  {
 		acceptUserInputInteractively();	
 	}
 	
-	/**
-	 * Displays the interactive menu
-	 */
+
 	public void displayMenu() {
 		System.out.println("*********************************************************");
 		System.out.println("Welcome to the TODO Management System");
@@ -56,19 +39,13 @@ public class UIManager  {
 		System.out.println("5|ListName|itemname 					- FETCH AN ITEM FROM THE LIST") ;
 		System.out.println("6|ListName					  		- DISPLAY ALL THE ITEMS IN THE LIST") ;
 		System.out.println("7|ListName|itemname|status 			- UPDATE THE STATUS OF AN ITEM IN THE LIST") ;
-		System.out.println("8|DISPLAY ALL 						- DISPLAY THE CONTENTS OF ALL THE LISTS IN THE SYSTEM") ;
+		System.out.println("8|DISPLAY 							- DISPLAY THE CONTENTS OF ALL THE LISTS IN THE SYSTEM") ;
 		System.out.println("9|RFIL 								- DISPLAY THE RECENTLY FINISHED LIST") ;
 		
 		System.out.println(" *************************************************************************") ;
 		System.out.println(" *************************************************************************") ;
 	}
-	/**
-	 * Accepts the user input from the command line interactively and uses the 
-	 * validator object to validate the data and create the UserInput object if the 
-	 * data is valid and processes the input using the TDLManager object from the 
-	 * controller package.
-	 * 
-	 */
+
 	public  void acceptUserInputInteractively() {
 
 		String textRead;
@@ -87,68 +64,60 @@ public class UIManager  {
 		}
 	}
 
-	/**
-	 * This method contains the code to process the entered input string and perform the
-	 * corresponding operation .
-	 *
-	 * @param inputObject
-	 */
+
 	public void processInput(UserInput  inputObject) {
 
 		switch(inputObject.getChoice()) {
 			case 1:
-				System.out.println("Listname to be created :" + inputObject.getListname());
-				tdlmanager.createList(inputObject.getListname());
-				System.out.println("Created list ..:" + inputObject.getListname());
+				System.out.println("Listname to be created :" + inputObject.getListName());
+				toDoListManager.createList(inputObject.getListName());
+				System.out.println("Created list ..:" + inputObject.getListName());
 				break;
 			case 2:
-				System.out.println("Adding item to list with name :" +inputObject.getListname() + "item to be added :" +inputObject.getItemname());
-				boolean status = tdlmanager.addItemToList(inputObject.getListname(),inputObject.getItemname(),inputObject.getItemDescription());
+				System.out.println("Adding item to list with name :" + inputObject.getListName() + "item to be added :" + inputObject.getItemName());
+				boolean status = toDoListManager.addItemToList(inputObject.getListName(),inputObject.getItemName(),inputObject.getItemDescription());
 				if(status)
 					System.out.println("Added the item to the list .." );
 				else
 					System.out.println("item could not be added as it already exists .. use update option to update the existing object .." );
 				break;
 			case 3:
-				System.out.println("Delete item from the list with the list name:" +inputObject.getListname()+ "item to be deleted"+inputObject.getItemname());
-				tdlmanager.deleteItemFromTheList(inputObject.getListname(),inputObject.getItemname());
+				System.out.println("Delete item from the list with the list name:" +inputObject.getListName()+ "item to be deleted"+inputObject.getItemName());
+				toDoListManager.deleteItemFromTheList(inputObject.getListName(), inputObject.getItemName());
 				System.out.println("Deleted the item from the list ..");
 				break;
 			case 4:
-				System.out.println("Update item in the list with the listname :" +inputObject.getListname()+"item to be updated"+inputObject.getItemname());
-				tdlmanager.updateItemInTheList(inputObject.getListname(),inputObject.getItemname(),inputObject.getItemDescription());
+				System.out.println("Update item in the list with the listname :" +inputObject.getListName()+"item to be updated"+inputObject.getItemName());
+				toDoListManager.updateItemInTheList(inputObject.getListName(), inputObject.getItemName(), inputObject.getItemDescription());
 				System.out.println("Updated the item in the list .. ");
 				break;
 			case 5:
-				System.out.println("Fetch item from the list with the listname :"+inputObject.getListname() + "item name "+inputObject.getItemname());
-				tdlmanager.viewListItem(inputObject.getListname(),inputObject.getItemname());
+				System.out.println("Fetch item from the list with the listname :"+inputObject.getListName() + "item name "+inputObject.getItemName());
+				toDoListManager.viewListItem(inputObject.getListName(), inputObject.getItemName());
 				System.out.println("Fetched the item from the list ..");
 				break;
 			case 6:
-				System.out.println("Displaying  all the items in the list with listname :" +inputObject.getListname());
-				tdlmanager.viewList(inputObject.getListname());
+				System.out.println("Displaying  all the items in the list with listname :" +inputObject.getListName());
+				toDoListManager.viewList(inputObject.getListName());
 				break;
 			case 7:
 				System.out.println("Update the status of the item in the list "+inputObject.getItemStatus());
-				tdlmanager.updateStatus(inputObject.getListname(), inputObject.getItemname(), inputObject.getItemStatus());
+				toDoListManager.updateStatus(inputObject.getListName(), inputObject.getItemName(), inputObject.getItemStatus());
 				System.out.println("Status update done ... ");
 				break;
 			case 8:
 				System.out.println("Display all the lists ");
-				tdlmanager.displayAllTheLists();
+				toDoListManager.displayAllTheLists();
 				System.out.println("Displayed all the lists ...");
 			case 9:
 				System.out.println("Display the contents of the recently finished items list ..");
-				tdlmanager.getRecentlyFinishedList().viewItemsInTheList(Constants.RECENTLY_FINISHED_LIST);
+				toDoListManager.getRecentlyFinishedList().viewItemsInTheList();
 				System.out.println("Displayed the contents of the RFIL ..");
 		}
 
 	}
 
-	/**
-	 * main function to test run 
-	 * @param args
-	 */
+
 	public static void main(String []args) {
 		new UIManager();
 	}

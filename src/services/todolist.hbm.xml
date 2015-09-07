@@ -9,20 +9,20 @@
         <id name="id" type="int" column="id">
             <generator class="native" />
         </id>
-        <timestamp name="timeStamp" column="creationdate" />
+        <timestamp name="lastUpdatedAt" column="creationdate" />
         <property  name="listName"  column="listname"     type="string" />
         <map name="items" cascade="all" >
             <key   column="listid" />
             <index column="itemname" type="string" />
-            <one-to-many class="domain.LineItem" />
+            <one-to-many class="domain.ListItem" />
         </map>
     </class>
 
-    <class name="domain.LineItem" table="ListItem">
+    <class name="domain.ListItem" table="ListItem">
         <id name="id" column="id" type="long">
             <generator class="native"/>
         </id>
-        <timestamp name="timeStamp"       column="timestamp" />
+        <timestamp name="lastUpdatedAt"       column="timestamp" />
         <property  name="itemName"        column="itemname"        type="text" />
         <property  name="itemDescription" column="itemdescription" type="text"/>
         <property  name="status"          column="status"          type="text"/>
