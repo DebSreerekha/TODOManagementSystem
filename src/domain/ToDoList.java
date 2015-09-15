@@ -13,7 +13,7 @@ public class ToDoList implements Serializable{
 	private int id;
 	private String listName;
 	private Map<String,ListItem> items;
-	private Date lastUpdatedAt; //TODO: Rename lastUpdatedAt to lastUpdatedAt
+	private Date lastUpdatedAt;
 
 	public ToDoList() {
 		items = new HashMap<String,ListItem>();
@@ -63,7 +63,7 @@ public class ToDoList implements Serializable{
 	}
 
 	public  void updateListItem(ListItem item) {
-		items.put(item.getItemName(),item);
+		items.put(item.getItemName(), item);
 		
 	}
 
@@ -96,24 +96,21 @@ public class ToDoList implements Serializable{
 	public void deleteItem(String itemName) {
 		items.remove(itemName);
 	}
-	
 
-	public void viewItemsInTheList() {
-
-		Collection<ListItem> values = items.values();
-		Iterator<ListItem>  iterator = values.iterator();
-		
-		System.out.println("TODOList name :" + this.getListName()) ;
-		System.out.println("Printing the contents ....");
-		
-		System.out.println("****************************************************");
-		System.out.println(" name 		Description		Status		lastUpdatedAt  ");
-		System.out.println("****************************************************");
-		
-		while(iterator.hasNext()){
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.id);
+		builder.append(this.listName);
+		builder.append(this.lastUpdatedAt);
+		Collection<ListItem> Values = items.values();
+		Iterator iterator = Values.iterator();
+		while(iterator.hasNext())
+		{
 			ListItem item = (ListItem) iterator.next();
-			System.out.println(item.getItemName() + "\t"+item.getItemDescription()+"\t" +item.getStatus()+"\t"+item.getLastUpdatedAt());
+			builder.append(item.toString());
 		}
+		return builder.toString() ;
 	}
 	
 }

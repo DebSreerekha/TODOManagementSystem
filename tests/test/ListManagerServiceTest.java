@@ -26,6 +26,7 @@ public class ListManagerServiceTest {
     public static void setUpClass()
     {
         service = new ListManagerService();
+        service.deleteAllListsExceptRFIL();
     }
     @Test
     public void testListCreation()
@@ -45,10 +46,13 @@ public class ListManagerServiceTest {
         list = service.fetchTheList("TestUpdate") ;
         assertEquals(list.getListName(),"TestUpdate");
     }
+
+    //TODO how can you test this
     @Test
     public void testFetchAllListNames()
     {
-        service.ListTheListNames();
+        service.fetchAllTheLists();
+        //assertEquals
     }
     @Test
     public void testDeleteListName()
@@ -68,8 +72,8 @@ public class ListManagerServiceTest {
         String listName = "ItemAddTest" ;
         service.createList(listName) ;
         service.addListItem(listName, listName + "Item1", "ItemDescription1", Constants.STATUS_ADDED);
-        ListItem item = service.showListItem(listName,listName+"Item1");
-        assertEquals(item.getItemDescription().trim() ,"ItemDescription1");
+        ListItem item = service.fetchTheListItem(listName+"Item1");
+        assertEquals(item.getItemDescription() ,"ItemDescription1");
     }
     @Test
     public void testListItemUpdationOfDescription()
@@ -79,8 +83,8 @@ public class ListManagerServiceTest {
         service.addListItem(listName, listName + "Item1", "ItemDescription1", Constants.STATUS_ADDED);
         service.updateListItemDescription(listName+"Item1","NewDescription",Constants.STATUS_UPDATE,listName);
 
-        ListItem item = service.showListItem(listName,listName+"Item1");
-        assertEquals(item.getItemDescription().trim(),"NewDescription");
+        ListItem item = service.fetchTheListItem(listName+"Item1");
+        assertEquals(item.getItemDescription(),"NewDescription");
 
     }
     @Test
@@ -91,8 +95,8 @@ public class ListManagerServiceTest {
         service.addListItem(listName,listName+"Item1","ItemDescription1",Constants.STATUS_ADDED);
         service.updateListItemStatus(listName,listName+"Item1",Constants.STATUS_UPDATE);
 
-        ListItem item = service.showListItem(listName,listName+"Item1");
-        assertEquals(item.getStatus().trim(),Constants.STATUS_UPDATE);
+        ListItem item = service.fetchTheListItem(listName+"Item1");
+        assertEquals(item.getStatus(),Constants.STATUS_UPDATE);
     }
     @Test
     public void testFetchListItem()
@@ -102,7 +106,7 @@ public class ListManagerServiceTest {
         service.addListItem(listName,listName+"Item1","ItemDescription1",Constants.STATUS_ADDED);
 
         ListItem item = service.fetchTheListItem(listName + "Item1");
-        assertEquals(item.getItemName().trim(),listName+"Item1");
+        assertEquals(item.getItemName(),listName+"Item1");
     }
     @Test
     public void testFetchAllListItems()
@@ -127,7 +131,7 @@ public class ListManagerServiceTest {
             ListItem item = iterator.next() ;
             String itemName = item.getItemName();
             int flag = Integer.parseInt(itemName.substring(itemName.length() - 1));
-            assertEquals(item.getItemDescription().trim(),"ItemDescription"+flag);
+            assertEquals(item.getItemDescription(),"ItemDescription"+flag);
 
         }
     }
@@ -139,7 +143,7 @@ public class ListManagerServiceTest {
         service.addListItem(listName,listName+"Item1","ItemDescription1",Constants.STATUS_ADDED);
 
         ListItem item = service.fetchTheListItem(listName + "Item1");
-        assertEquals(item.getItemName().trim(),listName+"Item1");
+        assertEquals(item.getItemName(),listName+"Item1");
 
         service.deleteListItem(listName, listName + "Item1");
          item = service.fetchTheListItem(listName + "Item1");

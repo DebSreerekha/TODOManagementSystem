@@ -1,7 +1,8 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by sreerekhadeb on 29/08/15.
@@ -18,25 +19,43 @@ public class ToDoListCollection implements Serializable{
     }
 
 
-    private Hashtable<String,ToDoList> toDoLists ;
+    private ArrayList<ToDoList> toDoLists ;
 
     public ToDoListCollection()
     {
-        toDoLists = new Hashtable<String , ToDoList>();
-        ToDoList recentlyFinishedList = new ToDoList(Constants.RECENTLY_FINISHED_LIST);
-        toDoLists.put(Constants.RECENTLY_FINISHED_LIST,recentlyFinishedList);
+        toDoLists = new ArrayList<ToDoList>();
     }
 
-    public Hashtable<String, ToDoList> getToDoLists() {
+    public ArrayList<ToDoList> getToDoLists() {
         return toDoLists;
     }
 
-    public void setToDoLists(Hashtable<String, ToDoList> toDoLists) {
+    public void setToDoLists(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
     }
 
     public ToDoList getRecentlyFinishedList()
     {
-        return toDoLists.get(Constants.RECENTLY_FINISHED_LIST) ;
+        Iterator iterator = toDoLists.iterator();
+
+        while(iterator.hasNext())
+        {
+            ToDoList list = (ToDoList) iterator.next();
+            if(list.getListName().equals(Constants.RECENTLY_FINISHED_LIST))
+                return list;
+        }
+        return null;
+    }
+
+    public String toString()
+    {
+       Iterator iterator = toDoLists.iterator();
+        StringBuilder builder = new StringBuilder();
+        while(iterator.hasNext())
+        {
+            ToDoList list = (ToDoList)iterator.next();
+            builder.append(list.toString());
+        }
+        return builder.toString() ;
     }
 }

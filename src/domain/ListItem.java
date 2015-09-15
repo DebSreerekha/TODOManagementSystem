@@ -20,7 +20,6 @@ public class ListItem implements Serializable{
 	{
 
 	}
-
 	public ListItem(String key, String value) {
 		
 		this.itemName = key;
@@ -77,4 +76,29 @@ public class ListItem implements Serializable{
 		this.lastUpdatedAt = lastUpdatedAt ;
 	}
 
+	public String  toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.id);
+		builder.append(this.getItemName());
+		builder.append(this.getItemDescription());
+		builder.append(this.getStatus());
+		builder.append(this.getLastUpdatedAt());
+		return builder.toString();
+	}
+
+	public String toFormattedString() {
+
+		StringBuffer buffer = new StringBuffer();
+
+		buffer.append(getItemName() );
+		buffer.append("\t");
+		buffer.append(getItemDescription());
+		buffer.append("\t");
+		buffer.append(getStatus());
+		buffer.append("\t");
+		buffer.append(getLastUpdatedAt());
+
+		return buffer.toString() ;
+	}
 }

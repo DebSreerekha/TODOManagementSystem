@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import controller.ToDoListManager;
+import domain.Constants;
 
 
 public class UIManager  {
@@ -111,7 +112,7 @@ public class UIManager  {
 				System.out.println("Displayed all the lists ...");
 			case 9:
 				System.out.println("Display the contents of the recently finished items list ..");
-				toDoListManager.getRecentlyFinishedList().viewItemsInTheList();
+				toDoListManager.viewList(Constants.RECENTLY_FINISHED_LIST);
 				System.out.println("Displayed the contents of the RFIL ..");
 		}
 

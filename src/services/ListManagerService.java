@@ -25,7 +25,6 @@ public class ListManagerService {
 
             factory = HibernateUtil.getSessionFactory();
 
-
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
@@ -91,7 +90,8 @@ public class ListManagerService {
         Session session = factory.openSession();
         Transaction tx = null;
         ToDoList list = null ;
-        try {
+        try
+        {
             tx = session.beginTransaction();
             Criteria cr = session.createCriteria(ToDoList.class);
             // Add restriction.
@@ -100,7 +100,6 @@ public class ListManagerService {
 
             for (Iterator iterator1 =
                  toDoLists.iterator(); iterator1.hasNext(); ) {
-                System.out.println("*********************** List contents*******************************");
                 list = (ToDoList) iterator1.next();
             }
             tx.commit();
@@ -124,11 +123,10 @@ public class ListManagerService {
             Criteria cr = session.createCriteria(ListItem.class,itemName);
             // Add restriction.
             cr.add(Restrictions.eq("itemName", itemName));
-            List toDoLists = cr.list();
+            List listItems = cr.list();
 
             for (Iterator iterator1 =
-                 toDoLists.iterator(); iterator1.hasNext(); ) {
-                System.out.println("*********************** List contents*******************************");
+                 listItems.iterator(); iterator1.hasNext(); ) {
                 listItem = (ListItem) iterator1.next();
             }
             tx.commit();
@@ -142,20 +140,17 @@ public class ListManagerService {
 
     }
 
-    public void ListTheListNames() {
+    public ToDoListCollection fetchAllTheLists(){
         Session session = factory.openSession();
         Transaction tx = null;
+        ToDoListCollection listCollection = new ToDoListCollection();
         try {
             tx = session.beginTransaction();
             List lists = session.createQuery("from domain.ToDoList").list();
             for (Iterator iterator1 =
                  lists.iterator(); iterator1.hasNext(); ) {
-                System.out.println("*********************** List contents*******************************");
                 ToDoList list = (ToDoList) iterator1.next();
-                System.out.println("ListName: " + list.getListName() + "   ");
-                System.out.println("Creation date: " + list.getlastUpdatedAt() + "    ");
-                System.out.println("id: " + list.getId());
-                System.out.println("----------------------------------------------------------------------");
+                listCollection.getToDoLists().add(list) ;
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -164,8 +159,8 @@ public class ListManagerService {
         } finally {
             session.close();
         }
+        return listCollection;
     }
-
 
     public void deleteList(String listName) {
         Session session = factory.openSession();
@@ -195,6 +190,37 @@ public class ListManagerService {
 
     }
 
+    public void deleteAllListsExceptRFIL()
+    {
+        Session session = factory.openSession();
+        Transaction tx = null ;
+
+        try {
+                tx = session.beginTransaction();
+                Criteria cr = session.createCriteria(ToDoList.class);
+                // Add restriction.
+                cr.add(Restrictions.ne("listName", "RFIL"));
+                List lists = cr.list();
+                for (Iterator iterator1 =
+                     lists.iterator(); iterator1.hasNext(); ) {
+                    ToDoList list = (ToDoList) iterator1.next();
+                    System.out.println("Names " +list.getListName());
+                    session.delete(list);
+                }
+                tx.commit();
+
+        }catch(HibernateException he)
+        {
+            if (tx != null) tx.rollback();
+            he.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+
+    }
+
 
     public boolean addListItem(String listName, String itemName, String itemDescription, String status) {
         Session session = factory.openSession();
@@ -215,7 +241,6 @@ public class ListManagerService {
                 item.setItemDescription(itemDescription);
 
                 ListItemMap.put(itemName, item);
-
 
                 list.setItems(ListItemMap);
 
@@ -289,6 +314,7 @@ public class ListManagerService {
                 tx = session.beginTransaction();
 
                 list = (ToDoList) session.load(ToDoList.class, list.getId());
+
                 Map<String, ListItem> ListItemMap = list.getItems();
 
                 item = ListItemMap.get(itemName);
@@ -303,17 +329,18 @@ public class ListManagerService {
                 if(!status.equals(Constants.STATUS_DONE)) {
                     session.save(list);
                 }
-                else {
+                else
+                {
 
                     ToDoList RFIList = getRecentlyFinishedList();
                     RFIList.addListItem(item);
-
 
                     RFIList = (ToDoList) session.load(ToDoList.class,RFIList.getId());
                     Map<String, ListItem> RFILMap = RFIList.getItems();
                     String compositeKey = list.getListName()+item.getItemName();
                     RFILMap.put(compositeKey, item);
                     session.save(RFIList);
+                   // deleteListItem(listName,itemName);
 
                 }
                 tx.commit();
@@ -324,18 +351,13 @@ public class ListManagerService {
             session.close();
         }
 
-
-
     }
-
-
     public void deleteListItem(String listName, String itemName) {
         Session session = factory.openSession();
         Transaction tx = null;
         ToDoList list =fetchTheList(listName);
-
-
-        try {
+        try
+        {
             tx = session.beginTransaction();
 
             Map<String, ListItem> ListItemMap = list.getItems();
@@ -363,141 +385,38 @@ public class ListManagerService {
 
     }
 
-
-    public ListItem showListItem(String listName,String itemName)
-    {
-        Session session = factory.openSession();
-        Transaction tx = null;
-        ListItem item = null ;
-        try {
-            tx = session.beginTransaction();
-
-            //testing the usage of the new method added ..
-            ToDoList list = fetchTheList(listName);
-            list = (ToDoList) session.load(ToDoList.class, list.getId());
-            Map<String, ListItem> ListItemMap = list.getItems();
-
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("Displaying the line item..");
-            item = ListItemMap.get(itemName);
-            System.out.println("itemName        : " + item.getItemName());
-            System.out.println("itemDescription : " + item.getItemDescription());
-            System.out.println("Status          : " + item.getStatus());
-            System.out.println("Time stamp      : " + item.getLastUpdatedAt());
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
-
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return item;
-    }
-
-    public void listListItems(String listName) {
-        Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            ToDoList list = fetchTheList(listName) ;
-            System.out.println("listName "+ list) ;
-            list = (ToDoList) session.load(ToDoList.class, list.getId());
-            Map<String, ListItem> ListItemMap = list.getItems();
-            Collection<ListItem> Values = ListItemMap.values();
-            Iterator<ListItem> iterator = Values.iterator();
-            System.out.println("********************************************* listing the contents of the list " + listName + "***********************************************");
-            while (iterator.hasNext()) {
-                ListItem item = (ListItem) iterator.next();
-                System.out.println("itemName        : " + item.getItemName());
-                System.out.println("itemDescription : " + item.getItemDescription());
-                System.out.println("Status          : " + item.getStatus());
-                System.out.println("Time stamp      : " + item.getLastUpdatedAt());
-                System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
-            }
-
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
-
     public void cleanUpRecentlyFinishedList() {
         ToDoList recentlyFinishedList = fetchTheList(Constants.RECENTLY_FINISHED_LIST);
-        System.out.println("recentlyFinishedList " +recentlyFinishedList.getListName() ) ;
+        if(recentlyFinishedList != null) {
+            System.out.println("recentlyFinishedList " + recentlyFinishedList.getListName());
             Map<String, ListItem> items = recentlyFinishedList.getItems();
-        if(items != null) {
-            Collection<ListItem> Values = items.values();
-            Iterator<ListItem> iterator = Values.iterator();
-            while (iterator.hasNext()) {
-                ListItem item = iterator.next();
-                Date date = item.getLastUpdatedAt();
-                Date todaysDate = new Date();
+            if (items != null) {
+                Collection<ListItem> Values = items.values();
+                Iterator<ListItem> iterator = Values.iterator();
+                while (iterator.hasNext()) {
+                    ListItem item = iterator.next();
+                    Date date = item.getLastUpdatedAt();
+                    Date todaysDate = new Date();
 
-                long noOfDays = (todaysDate.getTime() - date.getTime()) / (24 * 60 * 60 * 1000);
+                    long noOfDays = (todaysDate.getTime() - date.getTime()) / (24 * 60 * 60 * 1000);
 
-                if (noOfDays >= 3) {
+                    if (noOfDays >= 3) {
 
-                    //delete from the database table
-                    deleteListItem(Constants.RECENTLY_FINISHED_LIST, item.getItemName());
+                        //delete from the database table
+                        deleteListItem(Constants.RECENTLY_FINISHED_LIST, item.getItemName());
+                    }
                 }
             }
         }
     }
-
-
-
-
     public  ToDoList getRecentlyFinishedList() {
-        Session session = factory.openSession();
-        Transaction tx = null;
         ToDoList list = fetchTheList(Constants.RECENTLY_FINISHED_LIST);
         return list;
     }
-
-
-    public void displayAllTheLists()
+    public static void main(String []args)
     {
-        Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            List lists = session.createQuery("from domain.ToDoList").list();
-            for (Iterator iterator1 =
-                 lists.iterator(); iterator1.hasNext(); ) {
-                System.out.println("*********************** List contents*******************************");
-                ToDoList list = (ToDoList) iterator1.next();
-                System.out.print("ListName: " + list.getListName() + "   ");
-                System.out.print("Creation date: " + list.getlastUpdatedAt() + "    ");
-                System.out.print("id: " + list.getId());
-                System.out.println();
-
-                Map<String,ListItem> itemsMap = list.getItems() ;
-                Collection<ListItem> ListItemsMap = itemsMap.values();
-                Iterator iter = ListItemsMap.iterator() ;
-                while(iter.hasNext())
-                {
-                    ListItem item = (ListItem)iter.next();
-                    System.out.println("************ Printing the line items *************");
-                    System.out.println(item.getItemName());
-                    System.out.println(item.getItemDescription()) ;
-                    System.out.println(item.getLastUpdatedAt());
-                    System.out.println(item.getStatus());
-                }
-                System.out.println("----------------------------------------------------------------------");
-            }
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
+        ListManagerService service = new ListManagerService();
+        service.deleteAllListsExceptRFIL();
     }
 
 }

@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -9,6 +10,13 @@ import controller.ToDoListManager;
 import domain.Constants ;
 import domain.ListItem ;
 import domain.ToDoList ;
+import services.HibernateUtil;
+import services.ListManagerService;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
 
 public class ToDoListManagerTest {
@@ -20,6 +28,13 @@ public class ToDoListManagerTest {
 		for(int i = 1 ;i<6;i++) {
 			tdlm.addItemToList(listName,listName+"TODO"+i, "TODODescription"+i);
 		}
+
+	}
+	@BeforeClass
+	public static void setUp()
+	{
+		ListManagerService service = new ListManagerService();
+		service.deleteAllListsExceptRFIL();
 	}
 	
 	@Test
@@ -114,10 +129,11 @@ public class ToDoListManagerTest {
 		// The item should be moved to RFIL if the status is updated to Done ..Check if it exists in the RFIL
 		ToDoList list1 = tdlm.getListFromDatabase(Constants.RECENTLY_FINISHED_LIST);
 
-		//The itemName is prefixed with the listname  and added to RFIl ..
+		//The itemName is prefixed with the listname  and added to RFIL ..
 		String status = list1.getItems().get("TestList2TestList2TODO1").getStatus();
+		System.out.println( "status is :" +status) ;
 
-		//Checkif the status of the item is done .
+		//Check if the status of the item is done .
 		assertEquals(status,Constants.STATUS_DONE);
 	}
 
@@ -138,6 +154,7 @@ public class ToDoListManagerTest {
 	}
 	@Test
 	public void testRecentlyFinishedTasks() {
+
 		ToDoListManager tdlm = new ToDoListManager();
 
 		//create list
@@ -153,11 +170,12 @@ public class ToDoListManagerTest {
 
 		//check if the item is moved to the recently finished items list
 		ToDoList recentlyFinishedList = tdlm.getRecentlyFinishedList() ;
-		ListItem recentlyFinishedItem = recentlyFinishedList.getListItem("TestList1TODO1") ;
+
+		ListItem recentlyFinishedItem = recentlyFinishedList.getListItem("TestList1TestList1TODO1") ;
 
 
 		System.out.println("assertEquals(recentlyFinishedItem.getItemName(), recentlydoneInToDOList.getItemName());");
-				assertEquals(recentlyFinishedItem.getItemName(), recentlydoneInToDOList.getItemName());
+				assertEquals(recentlyFinishedItem.getId(), recentlydoneInToDOList.getId());
 		System.out.println("*******  checking assertion done ******************");
 		assertEquals(recentlyFinishedItem.getItemDescription(), recentlydoneInToDOList.getItemDescription());
 
@@ -184,7 +202,7 @@ public class ToDoListManagerTest {
 
 		//check if the item is moved to the recently finished items list
 		ToDoList recentlyFinishedList = tdlm.getRecentlyFinishedList() ;
-		ListItem recentlyFinishedItem = recentlyFinishedList.getListItem("TestList3TODO1") ;
+		ListItem recentlyFinishedItem = recentlyFinishedList.getListItem("TestList3TestList3TODO1") ;
 
 		assertEquals(recentlyFinishedItem.getStatus(),Constants.STATUS_DONE);
 
